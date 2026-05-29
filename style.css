@@ -1,0 +1,382 @@
+/* =========================
+   ANIMAÇÕES GERAIS (Originais Mantidas)
+   ========================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 77, 109, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(255, 77, 109, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(255, 77, 109, 0.4); }
+}
+
+/* =========================
+   VARIÁVEIS DE DESIGN E TEMA
+   ========================= */
+:root {
+  --primary-color: #ff4d6d;
+  --primary-hover: #ff758f;
+  --secondary-color: #c9184a;
+  --bg-gradient: linear-gradient(135deg, #ffe5ec 0%, #ffccd5 100%);
+  --dark-bg: #0a090b;
+  --text-dark: #3a0f18;
+  --text-body: #5c0f22;
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --shadow-lg: 0 20px 40px rgba(255, 77, 109, 0.15);
+}
+
+/* =========================
+   ESTILOS GERAIS
+   ========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   HERO CONTAINER (CENTRADO NA TELA)
+   ========================= */
+.hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 650px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 60px 40px;
+  border-radius: 28px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating-heart {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: heartbeat 1.6s infinite ease-in-out;
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  line-height: 1.25;
+  animation: fadeUp 1s ease forwards;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-body);
+  margin-bottom: 35px;
+  line-height: 1.6;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.4s;
+  outline: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(255, 77, 109, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* =========================
+   SURPRISE OVERLAY (TELA PRETA E CANVASES)
+   ========================= */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--dark-bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  overflow: hidden;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#heart-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Controles de Tela */
+.overlay-controls {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.control-btn {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-btn:hover {
+  background: rgba(255, 77, 109, 0.25);
+  border-color: rgba(255, 77, 109, 0.5);
+  transform: translateY(-2px);
+}
+
+.close-btn {
+  background: rgba(255, 77, 109, 0.15);
+  border-color: rgba(255, 77, 109, 0.3);
+}
+
+.close-btn:hover {
+  background: rgba(255, 77, 109, 0.4);
+  border-color: rgba(255, 77, 109, 0.7);
+}
+
+/* =========================
+   CARTA DE AMOR
+   ========================= */
+.love-letter {
+  position: relative;
+  z-index: 2;
+  background: rgba(20, 15, 25, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 77, 109, 0.25);
+  padding: 35px 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 460px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(255, 77, 109, 0.15);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: auto;
+}
+
+.love-letter.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.love-letter.hidden {
+  display: none;
+}
+
+.envelope-top {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  animation: heartbeat 2s infinite ease-in-out;
+}
+
+.love-letter h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.love-letter p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.love-letter strong {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
+}
+
+.letter-footer {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  margin-top: 25px;
+  font-size: 1.05rem;
+  color: var(--primary-hover);
+}
+
+/* =========================
+   BOTÃO DO SPOTIFY (PREMIUM)
+   ========================= */
+.btn-spotify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 22px auto 12px auto;
+  outline: none;
+  position: relative;
+  z-index: 10;
+}
+
+.btn-spotify svg {
+  width: 22px;
+  height: 22px;
+  fill: #ffffff;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-spotify:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(29, 185, 84, 0.6);
+  background: linear-gradient(135deg, #1ed760 0%, #1db954 100%);
+}
+
+.btn-spotify:hover svg {
+  transform: rotate(360deg) scale(1.15);
+}
+
+.btn-spotify:active {
+  transform: translateY(-1px) scale(0.97);
+  box-shadow: 0 6px 15px rgba(29, 185, 84, 0.3);
+}
+
+
+/* =========================
+   RESPONSIVIDADE GERAL
+   ========================= */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 40px 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+  
+  .love-letter {
+    padding: 25px 20px;
+  }
+}
